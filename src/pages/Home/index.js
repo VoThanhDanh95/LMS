@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { TextField, Button } from '@mui/material';
 import Grid from "@mui/material/Grid";
 import AudioPlayer from '../../components/AudioPlayer';
-import TaskList from '../../components/TaskList';
+import TaskList from '../../components/Tasks/TaskList';
 
 const sample_input = [
     { 'value': 0 },

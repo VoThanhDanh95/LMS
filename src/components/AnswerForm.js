@@ -15,8 +15,8 @@ const sample_input = [
     { 'value': 5 },
 ]
 
-function AnswerForm() {
-    const [inputs, setInputs] = useState(sample_input);
+function AnswerForm(props) {
+    const [inputs, setInputs] = useState(props.solution);
 
     const handleAddInput = () => {
         setInputs([...inputs, { value: '' }]);
