@@ -1,5 +1,5 @@
 // actions.js
-import { ADD_TODO, TOGGLE_TODO, SET_FILTER } from './todoConstant';
+import { ADD_TODO, DELETE_TODO, TOGGLE_TODO, SET_FILTER } from './todoConstant';
 
 export const addTodo = (content) => ({
     type: ADD_TODO,
@@ -13,6 +13,11 @@ export const toggleTodo = (id) => ({
     payload: {
         id,
     },
+});
+
+export const deleteTodo = id => ({
+    type: DELETE_TODO,
+    payload: id
 });
 
 export const setFilter = (filter) => ({

@@ -4,12 +4,18 @@ import { Route, Routes } from "react-router-dom";
 import Home from './pages/Home'
 import About from './pages/About'
 import Todo from './pages/Todo'
+import Audio from './pages/Audio'
 
 const routes = [
     {
         path: '/',
         exact: true,
         component: Home,
+    },
+    {
+        path: '/audio',
+        exact: true,
+        component: Audio,
     },
     {
         path: '/about',

@@ -1,44 +1,22 @@
-import { ADD_TODO, TOGGLE_TODO, SET_FILTER } from './todoConstant';
-
-
 const initialState = {
     todos: [],
-    filter: 'SHOW_ALL',
 };
 
-const todoReducer = (state = initialState, action) => {
+function todoReducer(state = initialState, action) {
     switch (action.type) {
-        case ADD_TODO: {
-            const { content } = action.payload;
-            const newTodo = {
-                id: state.todos.length + 1,
-                content,
-                completed: false,
-            };
+        case 'ADD_TODO':
             return {
                 ...state,
-                todos: [...state.todos, newTodo],
+                todos: [...state.todos, action.payload]
             };
-        }
-        case TOGGLE_TODO: {
-            const { id } = action.payload;
+        case 'DELETE_TODO':
             return {
                 ...state,
-                todos: state.todos.map((todo) =>
-                    todo.id === id ? { ...todo, completed: !todo.completed } : todo
-                ),
+                todos: state.todos.filter(todo => todo.id !== action.payload)
             };
-        }
-        case SET_FILTER: {
-            const { filter } = action.payload;
-            return {
-                ...state,
-                filter,
-            };
-        }
         default:
             return state;
     }
-};
+}
 
 export default todoReducer;
