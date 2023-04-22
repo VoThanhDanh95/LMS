@@ -4,12 +4,14 @@ import Col from 'react-bootstrap/Col';
 import AnswerForm from '../AnswerForm';
 import AudioPlayer from '../AudioPlayer';
 
+import { Button } from '@mui/material';
 
 import React, { useState, useRef } from 'react';
 import ReactQuill, { Quill } from 'react-quill';
 // import ImageResize from 'quill-image-resize-module';
 import 'react-quill/dist/quill.snow.css';
 import Delta from "quill-delta";
+import AnswerTrack from '../AnswerTrack';
 // import { QuillDeltaToHtmlConverter } from "quill-delta-to-html";
 // import ImageResize from 'quill-image-resize-module--fix-imports-error';
 // Quill.register('modules/imageResize', ImageResize);
@@ -18,6 +20,18 @@ import Delta from "quill-delta";
 
 
 function AudioTask(props) {
+
+
+    const [colors, setColors] = useState(props.solution.map(e => 'blue'));
+
+    console.log('colors', colors)
+    const handleButtonClick = (index, newColor) => {
+        const newColors = [...colors]
+        newColors[index] = 'red'
+        console.log("newColors ", newColors)
+        setColors(newColors)
+    }
+
     const quillRef = useRef(null)
     const [content, setContent] = useState(new Delta());
     const [jsonStr, setJsonStr] = useState("")
@@ -84,8 +98,7 @@ function AudioTask(props) {
                 <AudioPlayer {...props}></AudioPlayer>
             </Row>
             <Row>
-                <Col md={6}>
-
+                <Col md={5}>
                     <ReactQuill
                         ref={quillRef}
                         value={content}
@@ -93,16 +106,41 @@ function AudioTask(props) {
                         modules={{ toolbar: true }}
                         placeholder="Write something amazing..."
                     />
-
                     <button onClick={handleSave}>Lưu nội dung</button>
                     <button onClick={handleClear}>Xóa</button>
                     <button onClick={handleLoad}>Load</button>
 
                 </Col>
-                <Col md={6}>
-                    <AnswerForm {...props}/>
+                <Col md={5}>
+                    <AnswerForm
+                        {...props}
+                        colors={colors}
+                        onClick={handleButtonClick}
+                    />
                 </Col>
-                
+                <Col md={2}>
+                    <AnswerTrack 
+                        colors={colors}
+                        onClick={handleButtonClick}
+                    />
+
+                    {/* {props.solution.map((sol, index) => {
+                        return (
+                            <Button
+                                key={index}
+                                variant="contained"
+                                color="primary"
+                                style={{
+                                    backgroundColor: colors[index]
+                                }}
+                                onClick={handleButtonClick}
+                            >
+                                {index + 1000}
+                            </Button>
+                        )
+                    })} */}
+                </Col>
+
             </Row>
         </Container>
     );

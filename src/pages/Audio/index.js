@@ -78,7 +78,7 @@ function Audio() {
     }
     return (
 
-        <Container>
+        <>
             <Row>
                 <AudioPlayer></AudioPlayer>
             </Row>
@@ -102,7 +102,7 @@ function Audio() {
 
                 </Col>
             </Row>
-        </Container>
+        </>
     );
 }
 

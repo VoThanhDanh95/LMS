@@ -6,14 +6,14 @@ import FormControl from "@mui/material/FormControl";
 import Grid from "@mui/material/Grid";
 
 
-const sample_input = [
-    { 'value': 0 },
-    { 'value': 1 },
-    { 'value': 2 },
-    { 'value': 3 },
-    { 'value': 4 },
-    { 'value': 5 },
-]
+// const sample_input = [
+//     { 'value': 0 },
+//     { 'value': 1 },
+//     { 'value': 2 },
+//     { 'value': 3 },
+//     { 'value': 4 },
+//     { 'value': 5 },
+// ]
 
 function AnswerForm(props) {
     const [inputs, setInputs] = useState(props.solution);
@@ -56,7 +56,13 @@ function AnswerForm(props) {
                                 <Button
                                     variant="contained"
                                     color="primary"
-                                    onClick={(event) => handleClickNumber(index, event)}
+                                    style={{
+                                        backgroundColor: props.colors[index]
+                                    }}
+                                    onClick={(event) => {
+                                        console.log('hihi')
+                                        props.onClick(index, "red")
+                                    }}
                                 >
                                     {index + 1000}
                                 </Button>

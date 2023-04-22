@@ -1,56 +1,26 @@
-import React, { useState } from 'react';
-import { TextField, Button } from '@mui/material';
-import Grid from "@mui/material/Grid";
-import AudioPlayer from '../../components/AudioPlayer';
-import TaskList from '../../components/Tasks/TaskList';
+import { Grid, Paper, Button } from '@mui/material';
+import { styled } from '@mui/material/styles';
 
-const sample_input = [
-    { 'value': 0 },
-    { 'value': 1 },
-    { 'value': 2 },
-    { 'value': 3 },
-    { 'value': 4 },
-    { 'value': 5 },
-]
+const MyGrid = styled(Grid)({
+    flexGrow: 1,
+});
 
-function Form() {
-    const [inputs, setInputs] = useState(sample_input);
+const MyPaper = styled(Paper)({
+    height: 100,
+});
+const data = ['Element 1', 'Element 2', 'Element 3', 'Element 4', 'Element 5', 'Element 6', 'Element 7', 'Element 8', 'Element 9', 'Element 10'];
 
-    const handleAddInput = () => {
-        setInputs([...inputs, { value: '' }]);
-    };
-
-    const handleRemoveInput = (index) => {
-        const newInputs = [...inputs];
-        newInputs.splice(index, 1);
-        setInputs(newInputs);
-    };
-
-    const handleInputChange = (index, event) => {
-        const newInputs = [...inputs];
-        newInputs[index].value = event.target.value;
-        setInputs(newInputs);
-    };
-
-    const handleClickNumber = (index, event) => {
-        console.log('index', index)
-        console.log('event', event)
-        event.preventDefault()
-    }
-
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        console.log(inputs);
-        // submit form data
-    };
-
+function MyComponent() {
     return (
-        <TaskList />
-        // <AudioPlayer src={"https://assets.mixkit.co/active_storage/sfx/1714/1714-preview.mp3"}> 
-        // </AudioPlayer>
+        <Grid container spacing={2} wrap="wrap">
+            {Array.from({ length: 15 }).map((_, index) => (
+                <Grid key={index} item xs={6} sm={4} md={3} lg={2}>
+                    <Button variant="contained" color="primary" size="small" shape="circular">
+                        {index + 1}
+                    </Button>
+                </Grid>
+            ))}
+        </Grid>
     );
 }
-
-
-
-export default Form;
+export default MyComponent

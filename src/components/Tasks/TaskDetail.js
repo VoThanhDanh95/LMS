@@ -8,8 +8,8 @@ export default function TaskDetail(props) {
     const { task_id } = useParams()
     const [task, setTask] = useState(null);
     const location = useLocation();
-    const {rows} = location.state
-    const task_detail = rows.filter((row)=> row.id == task_id)[0]
+    const { rows } = location.state
+    const task_detail = rows.filter((row) => row.id == task_id)[0]
     console.log('props in task dettail ', props)
     console.log("task_detail ", task_detail)
 

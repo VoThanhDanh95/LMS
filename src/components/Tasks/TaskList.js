@@ -3,31 +3,100 @@ import axios from 'axios'
 import { DataGrid } from '@mui/x-data-grid';
 import { Link } from 'react-router-dom';
 
-// columns của bảng dữ liệu
-
-
-// rows của bảng dữ liệu
-// const rows = [
-//     { id: 1, task_name: 'Task 1', status: 'In Progress', score: '1' },
-//     { id: 2, task_name: 'Task 2', status: 'Completed', score: '1' },
-//     { id: 3, task_name: 'Task 3', status: 'In Progress', score: '2' },
-//     { id: 4, task_name: 'Task 4', status: 'In Progress', score: '2' },
-//     { id: 5, task_name: 'Task 5', status: 'In Progress', score: '2' },
-//     { id: 6, task_name: 'Task 6', status: 'In Progress', score: '2' },
-//     { id: 7, task_name: 'Task 7', status: 'In Progress', score: '2' },
-//     { id: 8, task_name: 'Task 8', status: 'In Progress', score: '2' },
-//     { id: 9, task_name: 'Task 9', status: 'In Progress', score: '2' },
-//     { id: 10, task_name: 'Task 10', status: 'In Progress', score: '2' },
-//     { id: 11, task_name: 'Task 11', status: 'In Progress', score: '2' },
-//     { id: 12, task_name: 'Task 12', status: 'In Progress', score: '2' },
-//     { id: 13, task_name: 'Task 13', status: 'In Progress', score: '2' },
-//     { id: 14, task_name: 'Task 14', status: 'In Progress', score: '2' },
-// ];
+const dummy_data = [
+    {
+        "id": 1,
+        "user_id": 1,
+        "task_id": 1,
+        "created_at": null,
+        "score": 1,
+        "due_date": null,
+        "status": "InProgress",
+        "name": "tester1",
+        "gender": "male",
+        "role_id": 1,
+        "last_active": null,
+        "picture": null,
+        "task_name": "task1",
+        "task_type": "audio",
+        "audio_url": "https://assets.mixkit.co/active_storage/sfx/1714/1714-preview.mp3",
+        "img_url": null,
+        "solution": [
+            {
+                "value1": 1
+            }
+        ],
+        "created_time": null
+    },
+    {
+        "id": 3,
+        "user_id": 1,
+        "task_id": 3,
+        "created_at": null,
+        "score": 5,
+        "due_date": null,
+        "status": "InProgress",
+        "name": "tester1",
+        "gender": "male",
+        "role_id": 1,
+        "last_active": null,
+        "picture": null,
+        "task_name": "task3",
+        "task_type": "audio",
+        "audio_url": "/assets/audio/Track4.mp3",
+        "img_url": null,
+        "solution": [
+            {
+                "value1": 1
+            },
+            {
+                "value2": 2
+            },
+            {
+                "value3": 3
+            }
+        ],
+        "created_time": null
+    },
+    {
+        "id": 4,
+        "user_id": 1,
+        "task_id": 4,
+        "created_at": null,
+        "score": 6,
+        "due_date": null,
+        "status": "Completed",
+        "name": "tester1",
+        "gender": "male",
+        "role_id": 1,
+        "last_active": null,
+        "picture": null,
+        "task_name": "task4",
+        "task_type": "audio",
+        "audio_url": "/assets/audio/Track5.mp3",
+        "img_url": null,
+        "solution": [
+            {
+                "value1": 1
+            },
+            {
+                "value2": 2
+            },
+            {
+                "value3": 3
+            },
+            {
+                "value4": 4
+            }
+        ],
+        "created_time": null
+    }
+]
 
 // component DataGrid
 function TaskList() {
     const user_id = 1 // hardcode here, change when different user login
-    const [rows, setRows] = useState([])
+    const [rows, setRows] = useState(dummy_data)
     const columns = [
         { field: 'id', headerName: 'ID', width: 90 },
         {
@@ -37,10 +106,10 @@ function TaskList() {
                 // console.log('aa', aa)
                 return (
                     <Link
-                        to={`/task/${params.row.id}`}
-                        state={{rows}}
-                        >
-                            {params.value}
+                        to={`${params.row.id}`}
+                        state={{ rows }}
+                    >
+                        {params.value}
                     </Link>
                 )
             },
