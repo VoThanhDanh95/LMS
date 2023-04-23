@@ -3,69 +3,29 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import AnswerForm from '../AnswerForm';
 import AudioPlayer from '../AudioPlayer';
-
 import { Button } from '@mui/material';
-
 import React, { useState, useRef } from 'react';
 import ReactQuill, { Quill } from 'react-quill';
-// import ImageResize from 'quill-image-resize-module';
 import 'react-quill/dist/quill.snow.css';
 import Delta from "quill-delta";
 import AnswerTrack from '../AnswerTrack';
-// import { QuillDeltaToHtmlConverter } from "quill-delta-to-html";
-// import ImageResize from 'quill-image-resize-module--fix-imports-error';
-// Quill.register('modules/imageResize', ImageResize);
+import { useSubmit } from 'react-router-dom'
 
 
 
 
 function AudioTask(props) {
-
-
     const [colors, setColors] = useState(props.solution.map(e => 'blue'));
-
-    console.log('colors', colors)
+    const [inputs, setInputs] = useState(props.solution);
     const handleButtonClick = (index, newColor) => {
         const newColors = [...colors]
         newColors[index] = 'red'
         console.log("newColors ", newColors)
         setColors(newColors)
     }
-
     const quillRef = useRef(null)
     const [content, setContent] = useState(new Delta());
     const [jsonStr, setJsonStr] = useState("")
-    const modules = {
-        toolbar: {
-            container: [
-                ['bold', 'italic', 'underline', 'strike'],
-                [{ 'align': [] }],
-                [{ 'header': 1 }, { 'header': 2 }, { 'header': 3 }],
-                [{ 'list': 'ordered' }, { 'list': 'bullet' }],
-                ['link', 'image'],
-                ['clean']
-            ],
-            handlers: {
-                'image': () => {
-                    const input = document.createElement('input');
-                    input.setAttribute('type', 'file');
-                    input.setAttribute('accept', 'image/*');
-                    input.onchange = () => {
-                        const file = input.files[0];
-                        const formData = new FormData();
-                        formData.append('image', file);
-                        // Upload image to server and get url
-                    };
-                    input.click();
-                }
-            }
-        },
-        // imageResize: {}
-    };
-    const handleContentChange = (value) => {
-        console.log('value: ', value)
-        setContent(value);
-    };
 
     const handleSave = () => {
         // const temp = quillRef.current.getEditor().getContents();
@@ -88,6 +48,19 @@ function AudioTask(props) {
         console.log('json loaded: ', jsonStr)
         // quillRef.current.setContents(JSON.parse(jsonStr))
         setContent(JSON.parse(jsonStr))
+    }
+
+    const submit = useSubmit()
+
+    const onAnswerSubmit = (event) => {
+        event.preventDefault()
+        const proceed = window.confirm("sure?")
+        if (proceed) {
+            submit(inputs, { method: "post", action: `/tasks/${props.task_id}` })
+        } else {
+            console.log('stay here')
+        }
+        console.log('submited', inputs)
     }
 
     console.log("props audio tasks ", props)
@@ -116,13 +89,17 @@ function AudioTask(props) {
                         {...props}
                         colors={colors}
                         onClick={handleButtonClick}
+                        inputs={inputs}
+                        setInputs={setInputs}
                     />
                 </Col>
                 <Col md={2}>
-                    <AnswerTrack 
+                    <button form='answerForm' onClick={onAnswerSubmit}>Nộp bài</button>
+                    <AnswerTrack
                         colors={colors}
                         onClick={handleButtonClick}
                     />
+
 
                     {/* {props.solution.map((sol, index) => {
                         return (
@@ -140,7 +117,6 @@ function AudioTask(props) {
                         )
                     })} */}
                 </Col>
-
             </Row>
         </Container>
     );

@@ -30,6 +30,10 @@ export default function TaskDetail(props) {
 
     // console.log("task_id ", task_id)
     return (
-        <AudioTask audio_url={task_detail.audio_url} solution={task_detail.solution} />
+        <AudioTask
+            task_id={task_detail.task_id}
+            audio_url={task_detail.audio_url}
+            solution={task_detail.solution}
+        />
     )
 }

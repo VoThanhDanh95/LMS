@@ -1,36 +1,20 @@
 import React, { useState } from 'react';
-import styles from './styles.module.css';
 import { TextField, Button } from '@mui/material';
-import InputLabel from "@mui/material/InputLabel";
-import FormControl from "@mui/material/FormControl";
 import Grid from "@mui/material/Grid";
-
-
-// const sample_input = [
-//     { 'value': 0 },
-//     { 'value': 1 },
-//     { 'value': 2 },
-//     { 'value': 3 },
-//     { 'value': 4 },
-//     { 'value': 5 },
-// ]
+import { json, redirect } from 'react-router-dom';
+import { Form } from 'react-router-dom'
 
 function AnswerForm(props) {
-    const [inputs, setInputs] = useState(props.solution);
-
-    const handleAddInput = () => {
-        setInputs([...inputs, { value: '' }]);
-    };
-
-    const handleRemoveInput = (index) => {
-        const newInputs = [...inputs];
-        newInputs.splice(index, 1);
-        setInputs(newInputs);
-    };
+    let {
+        inputs,
+        setInputs,
+        task_id
+    } = props
+    // const [inputs, setInputs] = useState(props.solution);
 
     const handleInputChange = (index, event) => {
         const newInputs = [...inputs];
-        newInputs[index].value = event.target.value;
+        newInputs[index] = event.target.value;
         setInputs(newInputs);
     };
 
@@ -40,15 +24,9 @@ function AnswerForm(props) {
         event.preventDefault()
     }
 
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        console.log(inputs);
-        // submit form data
-    };
-
     return (
         <div className='container'>
-            <form onSubmit={handleSubmit}>
+            <Form id="answerForm" method='post' action={`/tasks/${task_id}`}>
                 {inputs.map((input, index) => (
                     <div key={index}>
                         <Grid container spacing={2} alignItems="center">
@@ -71,6 +49,7 @@ function AnswerForm(props) {
                                 <TextField
                                     id={`${index}`}
                                     label={`Câu  ${index}`}
+                                    name={`${index}`}
                                     // helperText="Some important text"
                                     variant="outlined"
                                     onChange={(event) => handleInputChange(index, event)}
@@ -79,29 +58,51 @@ function AnswerForm(props) {
                             </Grid>
                         </Grid>
 
-
-
-                        {/* <TextField
-                            id={index}
-                            label="Helper text"
-                            onChange={(event) => handleInputChange(index, event)}
-                            helperText="Some important text"
-                            variant="standard"
-                        /> */}
-                        {/* {inputs.length !== 1 && (
-                            <button type="button" onClick={() => handleRemoveInput(index)}>
-                                Xóa
-                            </button>
-                        )} */}
                     </div>
                 ))}
-                <button type="button" onClick={handleAddInput}>
-                    Thêm
-                </button>
-                <button type="submit">Nộp bài</button>
-            </form>
+                {/* <button type="submit">Nộp bài</button> */}
+            </Form>
         </div>
     );
 }
 
 export default AnswerForm;
+
+
+export async function action({ request, params }) {
+    const {task_id} = params
+    const user_id = 1 // todo fix hardcode here
+
+
+    const data = await request.formData();
+
+    console.log('params')
+    const submissionData = {}
+    for (const pair_idx_value of data.entries()) {
+        submissionData[pair_idx_value[0]] = pair_idx_value[1]
+    }
+    const response = await fetch(`http://localhost:5000/users/${user_id}/submission/${task_id}`, {
+        method: 'PATCH',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(submissionData),
+    });
+    return redirect('/tasks')
+    // return ''
+    // return redirect('')
+
+    // const response = await fetch('http://localhost:8080/events', {
+    //     method: 'POST',
+    //     headers: {
+    //         'Content-Type': 'application/json',
+    //     },
+    //     body: JSON.stringify(eventData),
+    // });
+
+    // if (!response.ok) {
+    //     throw json({ message: 'Could not save event.' }, { status: 500 });
+    // }
+
+    // return redirect('/events');
+}

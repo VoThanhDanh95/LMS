@@ -11,6 +11,8 @@ import TaskList from "./components/Tasks/TaskList";
 import About from "./pages/About";
 import Home from "./pages/Home"
 import TaskDetail from "./components/Tasks/TaskDetail";
+import { action as myformAction } from "./components/MyForm"
+import { action as answerFormAction } from "./components/AnswerForm"
 
 const router = createBrowserRouter([
     {
@@ -18,14 +20,14 @@ const router = createBrowserRouter([
         element: <RootLayout />,
         children: [
             { index: true, element: <Home /> },
-            { path: 'about', element: <About /> },
+            { path: 'about', element: <About />, action: myformAction },
             {
                 path: 'tasks',
                 // element: <TaskList />,
                 children: [
                     { index: true, element: <TaskList /> },
                     { path: 'home', element: <Home /> },
-                    { path: ':task_id', element: <TaskDetail /> },
+                    { path: ':task_id', element: <TaskDetail />, action: answerFormAction },
                 ]
             },
             // { path: 'home', element: <Home /> }
