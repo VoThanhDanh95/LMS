@@ -16,6 +16,7 @@
     "bootstrap": "^5.2.3",
     "formik": "^2.2.9",
     "mui": "^0.0.1",
+    "mui-rte": "^2.0.1",
     "quill-delta": "^5.0.0",
     "react": "^18.2.0",
     "react-bootstrap": "^2.7.2",

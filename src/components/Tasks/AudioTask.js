@@ -10,12 +10,15 @@ import 'react-quill/dist/quill.snow.css';
 import Delta from "quill-delta";
 import AnswerTrack from '../AnswerTrack';
 import { useSubmit } from 'react-router-dom'
+import RichTextEditor from '../RichTextEditor';
+import TaskDetail from './TaskDetail';
 
 
 
 
 function AudioTask(props) {
     const [colors, setColors] = useState(props.solution.map(e => 'blue'));
+    console.log('props', props)
     const [inputs, setInputs] = useState(props.solution);
     const handleButtonClick = (index, newColor) => {
         const newColors = [...colors]
@@ -72,7 +75,14 @@ function AudioTask(props) {
             </Row>
             <Row>
                 <Col md={5}>
-                    <ReactQuill
+                    <RichTextEditor 
+                        value = {props.task_detail}
+                        inlineToolbar={false}
+                        readOnly={true}
+                        controls={[]}
+                    />
+
+                    {/* <ReactQuill
                         ref={quillRef}
                         value={content}
                         onChange={setContent}
@@ -81,7 +91,7 @@ function AudioTask(props) {
                     />
                     <button onClick={handleSave}>Lưu nội dung</button>
                     <button onClick={handleClear}>Xóa</button>
-                    <button onClick={handleLoad}>Load</button>
+                    <button onClick={handleLoad}>Load</button> */}
 
                 </Col>
                 <Col md={5}>

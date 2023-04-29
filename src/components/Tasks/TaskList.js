@@ -2,6 +2,11 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios'
 import { DataGrid } from '@mui/x-data-grid';
 import { Link } from 'react-router-dom';
+import Button from '@mui/material/Button';
+import EditIcon from '@mui/icons-material/Edit';
+import Stack from '@mui/material/Stack';
+import { Box, IconButton, Tooltip } from '@mui/material';
+import { Delete, Edit, Preview } from '@mui/icons-material';
 
 const dummy_data = [
     {
@@ -116,6 +121,28 @@ function TaskList() {
         },
         { field: 'status', headerName: 'Status', width: 150 },
         { field: 'score', headerName: 'Score', width: 150 },
+        {
+            field: 'actions', headerName: 'Actions', width: 400, renderCell: (params) => {
+                return (
+                    <Stack direction="row" spacing={2}>
+                        <Tooltip title="Edit this task">
+                            <IconButton onClick={() => { console.log('edit') }}>
+                                <Edit />
+                            </IconButton>
+                        </Tooltip>
+
+                        <Tooltip title="Delete this task">
+                            <IconButton
+                                onClick={() => { console.log('delete') }}
+                            >
+                                <Delete />
+                            </IconButton>
+                        </Tooltip>
+
+                    </Stack>
+                );
+            }
+        }
     ];
     useEffect(() => {
         const fetchData = async () => {

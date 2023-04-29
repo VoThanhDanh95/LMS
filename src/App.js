@@ -13,6 +13,8 @@ import Home from "./pages/Home"
 import TaskDetail from "./components/Tasks/TaskDetail";
 import { action as myformAction } from "./components/MyForm"
 import { action as answerFormAction } from "./components/AnswerForm"
+import { action as newTaskAction } from "./pages/Task/NewTask"
+import NewTaskPage from "./pages/Task/NewTask";
 
 const router = createBrowserRouter([
     {
@@ -28,6 +30,7 @@ const router = createBrowserRouter([
                     { index: true, element: <TaskList /> },
                     { path: 'home', element: <Home /> },
                     { path: ':task_id', element: <TaskDetail />, action: answerFormAction },
+                    { path: 'new', element: <NewTaskPage />, action: newTaskAction }
                 ]
             },
             // { path: 'home', element: <Home /> }
